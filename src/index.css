@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-bg: #08090D;
+  --color-secondary-bg: #0E1017;
+  --color-tertiary-bg: #12151F;
+  --color-accent-cyan: #00E5FF;
+  --color-accent-blue: #3B82F6;
+  --color-accent-purple: #8B5CF6;
+  --color-accent-pink: #EC4899;
+  --color-accent-lime: #A3FF12;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Outfit", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: initial; /* Handled by Lenis scroll */
+    font-family: var(--font-body);
+    background-color: var(--color-primary-bg);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: #ffffff;
+  }
+  
+  body {
+    background-color: #08090D;
+    color: #D1D5DB;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #08090D;
+}
+::-webkit-scrollbar-thumb {
+  background: #1A1F2C;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #252D3F;
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(14, 16, 23, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-panel-light {
+  background: rgba(14, 16, 23, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.glass-nav {
+  background: rgba(8, 9, 13, 0.75);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Tech Grid Background Animation */
+.tech-grid {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+}
+
+/* Text reveal mask effect */
+.text-gradient-cyan-purple {
+  background: linear-gradient(135deg, #00E5FF 0%, #3B82F6 50%, #8B5CF6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-pink-lime {
+  background: linear-gradient(135deg, #EC4899 0%, #8B5CF6 50%, #A3FF12 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Claymorphic shadow & border effect */
+.clay-card {
+  background: rgba(18, 21, 31, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    inset 0 4px 6px rgba(255, 255, 255, 0.03),
+    inset 0 -4px 6px rgba(0, 0, 0, 0.4),
+    0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.clay-button {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%), #3B82F6;
+  box-shadow: 
+    inset 0 2px 3px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.3),
+    0 4px 10px rgba(59, 130, 246, 0.3);
+}
+
+/* Custom Cursor Magnetic Area */
+.magnetic-wrap {
+  display: inline-block;
+  position: relative;
+}
+
+/* Grid light dots at intersections */
+.grid-dot {
+  width: 4px;
+  height: 4px;
+  background-color: rgba(0, 229, 255, 0.3);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.8);
+}
