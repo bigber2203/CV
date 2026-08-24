@@ -2,13 +2,6 @@ import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 
 export default function FinalCTA() {
-  const handleScrollToForm = () => {
-    const el = document.getElementById('contact-form-anchor');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <section className="relative py-24 bg-[#08090D] overflow-hidden border-t border-white/5">
       {/* Decorative vertical lines */}

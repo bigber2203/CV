@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Lenis from 'lenis';
 
 // Import Layout Components
@@ -26,6 +26,7 @@ import AdminDashboard from './sections/AdminDashboard';
 
 export default function App() {
   const isAdmin = window.location.pathname === '/admin';
+  const [activeSection, setActiveSection] = useState('home');
 
   // Initialize Lenis Smooth Scroll (only for main website page)
   useEffect(() => {
@@ -38,6 +39,8 @@ export default function App() {
       touchMultiplier: 1.5,
     });
 
+    window.lenis = lenis; // Expose Lenis globally to avoid conflicts
+
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
@@ -47,6 +50,7 @@ export default function App() {
 
     return () => {
       lenis.destroy();
+      window.lenis = null;
     };
   }, [isAdmin]);
 
@@ -59,24 +63,24 @@ export default function App() {
       {/* Background Layout Shells */}
       <BackgroundGrid />
       <CustomCursor />
-      <Navbar />
+      <Navbar activeSection={activeSection} setActiveSection={setActiveSection} />
       <FloatingWhatsApp />
 
       {/* Main Container */}
       <main className="relative z-10 w-full min-h-screen">
         {/* Sections */}
-        <Hero />
-        <About />
-        <Services />
+        <Hero activeSection={activeSection} />
+        <About activeSection={activeSection} />
+        <Services activeSection={activeSection} />
         <WhatICanBuild />
-        <PossibilityLab />
+        <PossibilityLab activeSection={activeSection} />
         <Philosophy />
         <WhyChooseCreativeTech />
-        <Toolbox />
+        <Toolbox activeSection={activeSection} />
         <ClientPaths />
         <Roadmap />
-        <FAQ />
-        <Contact />
+        <FAQ activeSection={activeSection} />
+        <Contact activeSection={activeSection} />
         <FinalCTA />
       </main>
 

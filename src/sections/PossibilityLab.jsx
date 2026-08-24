@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { ArrowRight, RefreshCw, Send, Share2, Layers } from 'lucide-react';
+import CinematicBackground from '../components/CinematicBackground';
 
 export default function PossibilityLab() {
   const [activeScenario, setActiveScenario] = useState('brand');
@@ -173,16 +175,38 @@ export default function PossibilityLab() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return (
-    <section id="possibility-lab" className="relative py-24 bg-[#08090D] overflow-hidden border-t border-white/5">
-      {/* Decorative vertical lines */}
-      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
-      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
-      
-      {/* Pulsing light backdrop */}
-      <div className="absolute top-[40%] right-[-10%] w-[50%] h-[50%] bg-accent-blue/5 rounded-full blur-[140px] pointer-events-none"></div>
+  const sectionRef = useRef(null);
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+  return (
+    <section 
+      ref={sectionRef}
+      id="possibility-lab" 
+      className="relative py-24 overflow-hidden border-t border-white/5"
+    >
+      {/* Cinematic Background Layer */}
+      <CinematicBackground
+        src="/backgrounds/section-market-illustrated.png"
+        webp="/backgrounds/section-market-illustrated.webp"
+        mobile="/backgrounds/section-market-illustrated-mobile.webp"
+        objectPosition="center center"
+        overlayStrength="strong"
+        parallax={true}
+        kenBurns={false}
+        sectionRef={sectionRef}
+      />
+      
+      {/* Structural details */}
+      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
+      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
+
+      <motion.div 
+        animate={{ 
+          opacity: isActive ? 1 : 0, 
+          x: xOffset 
+        }}
+        transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+        className="max-w-7xl mx-auto px-6 relative z-10"
+      >
         
         {/* Header */}
         <div className="max-w-3xl text-left mb-16">
@@ -207,10 +231,10 @@ export default function PossibilityLab() {
                 key={scen.id}
                 onMouseEnter={() => setActiveScenario(scen.id)}
                 onClick={() => setActiveScenario(scen.id)}
-                className={`w-full p-5 rounded-2xl border text-left transition-all duration-300 flex items-center justify-between cursor-pointer ${
+                className={`w-full p-5 text-left transition-all duration-300 flex items-center justify-between cursor-pointer glass-panel ${
                   activeScenario === scen.id
-                    ? 'bg-[#12151F] border-accent-purple shadow-[0_0_15px_rgba(139,92,246,0.15)] scale-[1.01]'
-                    : 'bg-[#0E1017]/40 border-white/5 hover:border-white/10 hover:bg-[#0E1017]/80'
+                    ? 'border-accent-purple shadow-[0_0_25px_rgba(139,92,246,0.15)] scale-[1.01] bg-[#12151F]/80'
+                    : 'border-white/5 hover:border-white/10 hover:bg-[#0E1017]/40'
                 }`}
                 data-cursor="pointer"
               >
@@ -235,7 +259,7 @@ export default function PossibilityLab() {
 
           {/* Right panel: Live Visual viewport */}
           <div className="lg:col-span-5 flex flex-col justify-between">
-            <div className="clay-card rounded-3xl border border-white/10 bg-[#0E1017]/80 backdrop-blur-md overflow-hidden shadow-2xl h-full flex flex-col justify-between">
+            <div className="glass-panel overflow-hidden shadow-2xl h-full flex flex-col justify-between border-white/10 shadow-[0_0_35px_rgba(130,80,255,0.04)]">
               
               {/* Fake header bar */}
               <div className="bg-[#08090D] border-b border-white/5 px-6 py-3 flex items-center justify-between">
@@ -273,7 +297,7 @@ export default function PossibilityLab() {
           </button>
         </div>
 
-      </div>
+      </motion.div>
     </section>
   );
 }

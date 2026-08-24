@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { ShieldCheck, Sparkles, MapPin, Cpu, Layout, FileCode, PlaySquare } from 'lucide-react';
+import CinematicBackground from '../components/CinematicBackground';
 
-export default function About() {
+export default function About({ activeSection }) {
+  const sectionRef = useRef(null);
+
   const domains = [
     { name: 'Web Development', icon: <FileCode className="w-4 h-4 text-accent-cyan" /> },
     { name: 'Frontend Engineering', icon: <Layout className="w-4 h-4 text-accent-blue" /> },
@@ -11,18 +15,55 @@ export default function About() {
     { name: 'Graphic Design & Video Editing', icon: <PlaySquare className="w-4 h-4 text-white" /> }
   ];
 
+  const sectionIndex = {
+    home: 0,
+    about: 1,
+    services: 2,
+    'possibility-lab': 3,
+    toolbox: 4,
+    faq: 5,
+    contact: 6
+  };
+
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
+  const isActive = activeSection === 'about';
+  const isPast = sectionIndex[activeSection] > 1;
+  const xOffset = isMobile ? 0 : (isPast ? -50 : 50);
+
   return (
-    <section id="about" className="relative py-24 bg-[#0E1017]/40 border-y border-white/5 overflow-hidden">
+    <section 
+      ref={sectionRef}
+      id="about" 
+      className="relative py-24 overflow-hidden border-y border-white/5"
+    >
+      {/* Cinematic Background Layer */}
+      <CinematicBackground
+        src="/backgrounds/section-hanuman-temple.jpg"
+        webp="/backgrounds/section-hanuman-temple.webp"
+        mobile="/backgrounds/section-hanuman-temple-mobile.webp"
+        objectPosition="center 40%"
+        overlayStrength="medium"
+        parallax={true}
+        kenBurns={false}
+        sectionRef={sectionRef}
+      />
       
       {/* Decorative vertical lines */}
-      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
-      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
+      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
+      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <motion.div 
+        animate={{ 
+          opacity: isActive ? 1 : 0, 
+          x: xOffset 
+        }}
+        transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+        className="max-w-7xl mx-auto px-6 relative z-10"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Column (Content) */}
-          <div className="lg:col-span-7 text-left">
+          <div className="lg:col-span-7 text-left glass-panel p-8 md:p-10 shadow-[0_0_35px_rgba(0,220,255,0.04)]">
             <span className="text-xs font-mono font-bold tracking-widest text-accent-purple uppercase block mb-3">
               // WHO IS BIGYAT DEB?
             </span>
@@ -65,7 +106,7 @@ export default function About() {
 
           {/* Right Column (Visual telemetry / Status card) */}
           <div className="lg:col-span-5 w-full">
-            <div className="clay-card p-6 rounded-2xl border border-white/10 text-left relative overflow-hidden">
+            <div className="glass-panel p-6 text-left relative overflow-hidden shadow-[0_0_35px_rgba(130,80,255,0.04)]">
               {/* Card glowing title */}
               <div className="flex justify-between items-center border-b border-white/5 pb-4 mb-4">
                 <span className="font-mono text-xs text-gray-400 flex items-center gap-1.5">
@@ -147,7 +188,7 @@ export default function About() {
           </div>
 
         </div>
-      </div>
+      </motion.div>
 
       {/* Tech DNA marquee bar */}
       <div className="mt-20 border-y border-white/5 py-4 bg-[#12151F]/20 relative overflow-hidden flex whitespace-nowrap">

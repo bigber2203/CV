@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { 
   Laptop, 
   UtensilsCrossed, 
@@ -9,8 +10,10 @@ import {
   ArrowRight,
   CheckCircle2
 } from 'lucide-react';
+import CinematicBackground from '../components/CinematicBackground';
 
 export default function Services() {
+  const sectionRef = useRef(null);
   const [activeCard, setActiveCard] = useState(null);
 
   const services = [
@@ -87,18 +90,27 @@ export default function Services() {
         'Logo & Visual Assets Creation'
       ],
       colorClass: 'group-hover:border-accent-purple/40 hover:shadow-[0_0_20px_rgba(139,92,246,0.15)]',
-      glowColor: 'bg-accent-purple/10'
+      title: 'UI/UX & Brand Design',
+      desc: 'Pixel-perfect wireframes, style guides, identity packages, and client portals.',
+      bullets: [
+        'Figma wireframe prototypes',
+        'Custom typographic hierarchies',
+        'Sleek modern color schemes',
+        'Complete brand identity assets'
+      ],
+      colorClass: 'group-hover:border-accent-purple/40 hover:shadow-[0_0_20px_rgba(139,92,246,0.08)]',
+      glowColor: 'bg-accent-purple/5'
     },
     {
-      num: '06',
-      title: 'VIDEO & CONTENT EDITING',
+      id: 'video',
+      num: '05',
       icon: <Video className="w-8 h-8 text-white" />,
-      desc: 'Elevate media visual profiles with short form reels, promotional products, motion graphics, and clean cuts for social campaigns.',
+      title: 'Video & Content Editing',
+      desc: 'High-retention social media cuts, promo reels, motion designs, and audio correction.',
       bullets: [
-        'Short Form Content (Reels, TikToks, Shorts)',
-        'Business Promotional Videos',
-        'Motion Graphics & Title Animations',
-        'Color Grading & Audio Master Alignment',
+        'Short-form reels & TikTok content',
+        'YouTube content layouts',
+        'Custom audio track editing',
         'Creative Social Media Cuts'
       ],
       colorClass: 'group-hover:border-white/20 hover:shadow-[0_0_20px_rgba(255,255,255,0.08)]',
@@ -107,16 +119,38 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className="relative py-24 overflow-hidden">
+    <section 
+      ref={sectionRef}
+      id="services" 
+      className="relative py-24 overflow-hidden"
+    >
+      {/* Cinematic Background Layer */}
+      <CinematicBackground
+        src="/backgrounds/section-street-scene.jpg"
+        webp="/backgrounds/section-street-scene.webp"
+        mobile="/backgrounds/section-street-scene-mobile.webp"
+        objectPosition="center center"
+        overlayStrength="strong"
+        parallax={true}
+        kenBurns={false}
+        sectionRef={sectionRef}
+      />
       
       {/* Structural details */}
-      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
-      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
+      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
+      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
       
       {/* Pulsing light behind */}
       <div className="absolute top-[30%] left-[-10%] w-[40%] h-[40%] rounded-full bg-accent-blue/5 blur-[150px] pointer-events-none"></div>
       
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <motion.div 
+        animate={{ 
+          opacity: isActive ? 1 : 0, 
+          x: xOffset 
+        }}
+        transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+        className="max-w-7xl mx-auto px-6 relative z-10"
+      >
         
         {/* Header */}
         <div className="max-w-3xl text-left mb-16">
@@ -188,7 +222,7 @@ export default function Services() {
           ))}
         </div>
 
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,8 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Code, Brush, Move, Bot, Sparkles } from 'lucide-react';
+import CinematicBackground from '../components/CinematicBackground';
 
-export default function Toolbox() {
+export default function Toolbox({ activeSection }) {
+  const sectionRef = useRef(null);
   const [hoveredCategory, setHoveredCategory] = useState(null);
+
+  const sectionIndex = {
+    home: 0,
+    about: 1,
+    services: 2,
+    'possibility-lab': 3,
+    toolbox: 4,
+    faq: 5,
+    contact: 6
+  };
+
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
+  const isActive = activeSection === 'toolbox';
+  const isPast = sectionIndex[activeSection] > 4;
+  const xOffset = isMobile ? 0 : (isPast ? -50 : 50);
 
   const categories = [
     {
@@ -44,15 +62,35 @@ export default function Toolbox() {
   ];
 
   return (
-    <section id="toolbox" className="relative py-24 bg-[#0E1017]/40 border-y border-white/5 overflow-hidden">
-      {/* Decorative vertical lines */}
-      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
-      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
+    <section 
+      ref={sectionRef}
+      id="toolbox" 
+      className="relative py-24 overflow-hidden border-y border-white/5"
+    >
+      {/* Cinematic Background Layer */}
+      <CinematicBackground
+        src="/backgrounds/section-bazaar-banners.jpg"
+        webp="/backgrounds/section-bazaar-banners.webp"
+        mobile="/backgrounds/section-bazaar-banners-mobile.webp"
+        objectPosition="center center"
+        overlayStrength="strong"
+        parallax={true}
+        kenBurns={false}
+        sectionRef={sectionRef}
+      />
 
-      {/* Background glow spot */}
-      <div className="absolute top-[20%] left-[-10%] w-[45%] h-[45%] bg-accent-cyan/5 rounded-full blur-[140px] pointer-events-none"></div>
+      {/* Structural details */}
+      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
+      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <motion.div 
+        animate={{ 
+          opacity: isActive ? 1 : 0, 
+          x: xOffset 
+        }}
+        transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+        className="max-w-7xl mx-auto px-6 relative z-10"
+      >
         
         {/* Header */}
         <div className="max-w-3xl text-left mb-16">
@@ -74,7 +112,7 @@ export default function Toolbox() {
               key={cat.id}
               onMouseEnter={() => setHoveredCategory(cat.id)}
               onMouseLeave={() => setHoveredCategory(null)}
-              className={`group p-8 bg-[#12151F]/40 border border-white/5 rounded-3xl hover:bg-[#12151F]/90 transition-all duration-500 text-left min-h-[300px] flex flex-col justify-between relative overflow-hidden ${cat.glowClass}`}
+              className={`group p-8 glass-panel hover:bg-[#12151F]/60 transition-all duration-500 text-left min-h-[300px] flex flex-col justify-between relative overflow-hidden ${cat.glowClass}`}
               data-cursor="pointer"
             >
               
@@ -127,7 +165,7 @@ export default function Toolbox() {
           ))}
         </div>
 
-      </div>
+      </motion.div>
     </section>
   );
 }

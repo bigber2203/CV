@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import CinematicBackground from '../components/CinematicBackground';
 
-export default function Hero() {
+export default function Hero({ activeSection }) {
   const roles = [
     'FULL STACK DEVELOPER',
     'CREATIVE TECHNOLOGIST',
@@ -22,6 +23,21 @@ export default function Hero() {
     }, 2800);
     return () => clearInterval(interval);
   }, []);
+
+  const sectionIndex = {
+    home: 0,
+    about: 1,
+    services: 2,
+    'possibility-lab': 3,
+    toolbox: 4,
+    faq: 5,
+    contact: 6
+  };
+
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
+  const isActive = activeSection === 'home';
+  const isPast = sectionIndex[activeSection] > 0;
+  const xOffset = isMobile ? 0 : (isPast ? -50 : 50);
 
   // Canvas particle network logic
   useEffect(() => {
@@ -157,26 +173,56 @@ export default function Hero() {
     const element = document.getElementById(id);
     if (element) {
       const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
+      if (window.lenis) {
+        window.lenis.scrollTo(element, { offset: -offset, duration: 1.2 });
+      } else {
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = element.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
   };
 
-  return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden">
-      {/* Grid line divider overlay */}
-      <div className="absolute top-[80px] left-0 w-full h-[1px] bg-white/5"></div>
-      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
-      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
+  const sectionRef = useRef(null);
 
-      <div className="max-w-7xl w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 items-center gap-12 z-10 py-12 md:py-0">
+  return (
+    <section 
+      ref={sectionRef}
+      id="home" 
+      className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden"
+    >
+      {/* Cinematic Background Layer */}
+      <CinematicBackground
+        src="/backgrounds/hero-bioluminescent.jpg"
+        webp="/backgrounds/hero-bioluminescent.webp"
+        mobile="/backgrounds/hero-bioluminescent-mobile.webp"
+        objectPosition="center center"
+        overlayStrength="medium"
+        parallax={true}
+        kenBurns={true}
+        priority={true}
+        sectionRef={sectionRef}
+      />
+
+      {/* Grid line divider overlay */}
+      <div className="absolute top-[80px] left-0 w-full h-[1px] bg-white/5 z-1"></div>
+      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
+      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
+
+      <motion.div 
+        animate={{ 
+          opacity: isActive ? 1 : 0, 
+          x: xOffset 
+        }}
+        transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+        className="max-w-7xl w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 items-center gap-12 z-10 py-12 md:py-0"
+      >
         
         {/* Left Column (Content) */}
         <div className="lg:col-span-7 flex flex-col items-start text-left">
@@ -278,7 +324,7 @@ export default function Hero() {
           </div>
         </div>
 
-      </div>
+      </motion.div>
     </section>
   );
 }

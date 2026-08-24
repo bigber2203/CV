@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-export default function FAQ() {
+export default function FAQ({ activeSection }) {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const faqs = [
@@ -31,6 +32,21 @@ export default function FAQ() {
     }
   ];
 
+  const sectionIndex = {
+    home: 0,
+    about: 1,
+    services: 2,
+    'possibility-lab': 3,
+    toolbox: 4,
+    faq: 5,
+    contact: 6
+  };
+
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
+  const isActive = activeSection === 'faq';
+  const isPast = sectionIndex[activeSection] > 5;
+  const xOffset = isMobile ? 0 : (isPast ? -50 : 50);
+
   const toggleAccordion = (idx) => {
     setActiveIndex(activeIndex === idx ? null : idx);
   };
@@ -44,42 +60,47 @@ export default function FAQ() {
       {/* Background glow spot */}
       <div className="absolute bottom-[10%] left-[-10%] w-[45%] h-[45%] bg-accent-pink/5 rounded-full blur-[140px] pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <motion.div 
+        animate={{ 
+          opacity: isActive ? 1 : 0, 
+          x: xOffset 
+        }}
+        transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+        className="max-w-7xl mx-auto px-6 relative z-10"
+      >
         
         {/* Header */}
         <div className="text-left mb-16 max-w-2xl">
-          <span className="text-xs font-mono font-bold tracking-widest text-accent-cyan uppercase block mb-3">
-            // FAQ REGISTER
+          <span className="text-xs font-mono font-bold tracking-widest text-accent-pink uppercase block mb-3">
+            // FREQUENTLY ASKED QUESTIONS
           </span>
-          <h2 className="font-display font-black text-4xl md:text-6xl text-white mb-4">
-            FREQUENTLY ASKED.
+          <h2 className="font-display font-black text-4xl md:text-6xl text-white mb-6 leading-none">
+            COMMON INQUIRIES.
           </h2>
-          <p className="text-gray-400 text-base font-body">
-            Have questions about pricing, project scales, or AI integration? Here are straightforward answers.
+          <p className="text-gray-400 text-sm md:text-base font-body leading-relaxed">
+            Here are quick explanations regarding project timelines, AI capabilities, design revisions, and operational logistics.
           </p>
         </div>
 
-        {/* FAQ Accordion List */}
-        <div className="max-w-4xl mx-auto space-y-4">
-          {faqs.map((faq, idx) => {
-            const isOpen = activeIndex === idx;
+        {/* FAQ Accordion Grid */}
+        <div className="max-w-3xl mx-auto space-y-4">
+          {faqs.map((faq, index) => {
+            const isOpen = activeIndex === index;
             return (
               <div 
-                key={idx}
-                className="p-1.5 rounded-2xl bg-[#0E1017]/40 border border-white/5 overflow-hidden transition-all duration-300"
+                key={index}
+                className="bg-[#12151F]/40 border border-white/5 rounded-2xl hover:border-white/10 hover:bg-[#12151F]/70 transition-all duration-300 overflow-hidden"
               >
                 <button
-                  onClick={() => toggleAccordion(idx)}
+                  onClick={() => toggleAccordion(index)}
                   className="w-full p-5 flex items-center justify-between text-left cursor-pointer"
                   data-cursor="pointer"
                 >
-                  <span className="font-display font-bold text-sm md:text-base text-white hover:text-accent-cyan transition-colors pr-4">
+                  <span className="font-display font-bold text-sm md:text-base text-gray-200 hover:text-white transition-colors">
                     {faq.q}
                   </span>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center border transition-all ${
-                    isOpen ? 'border-accent-cyan bg-accent-cyan/10 text-accent-cyan' : 'border-white/10 text-gray-500'
-                  }`}>
-                    {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                  <div className="p-1 bg-white/5 rounded-lg border border-white/5 text-gray-400">
+                    {isOpen ? <Minus className="w-4 h-4 text-accent-pink" /> : <Plus className="w-4 h-4" />}
                   </div>
                 </button>
 
@@ -97,7 +118,7 @@ export default function FAQ() {
           })}
         </div>
 
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Mail, Github, Linkedin, Instagram, MessageSquare, ArrowRight, CheckCircle, RefreshCw } from 'lucide-react';
+import { motion } from 'framer-motion';
 
-export default function Contact() {
+export default function Contact({ activeSection }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,6 +17,21 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [validationError, setValidationError] = useState('');
+
+  const sectionIndex = {
+    home: 0,
+    about: 1,
+    services: 2,
+    'possibility-lab': 3,
+    toolbox: 4,
+    faq: 5,
+    contact: 6
+  };
+
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
+  const isActive = activeSection === 'contact';
+  const isPast = sectionIndex[activeSection] > 6;
+  const xOffset = isMobile ? 0 : (isPast ? -50 : 50);
 
   const needsList = [
     'Web Development',
@@ -150,7 +166,14 @@ export default function Contact() {
       <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent-cyan/5 rounded-full blur-[150px] pointer-events-none"></div>
       <div className="absolute top-[20%] right-[-10%] w-[45%] h-[45%] bg-accent-purple/5 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <motion.div 
+        animate={{ 
+          opacity: isActive ? 1 : 0, 
+          x: xOffset 
+        }}
+        transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+        className="max-w-7xl mx-auto px-6 relative z-10"
+      >
         
         {/* ================= CTA SECTION ================= */}
         <div className="glass-panel p-8 md:p-16 rounded-3xl border border-white/5 text-center mb-24 relative overflow-hidden">
@@ -489,7 +512,7 @@ export default function Contact() {
 
         </div>
 
-      </div>
+      </motion.div>
     </section>
   );
 }
