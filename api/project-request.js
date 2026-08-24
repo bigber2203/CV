@@ -112,67 +112,66 @@ export default async function handler(req, res) {
 
     const resend = new Resend(resendApiKey);
 
-    // Email to Bigyat (debbigyat@gmail.com)
-    try {
-      await resend.emails.send({
-        from: 'Portfolio Leads <onboarding@resend.dev>',
-        to: 'debbigyat@gmail.com',
-        replyTo: email,
-        subject: `🚀 New Project Inquiry from ${name}`,
-        html: `
-          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #f8fafc;">
-            <h2 style="color: #0f172a; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; margin-top: 0; font-family: sans-serif;">NEW CLIENT PROJECT REQUEST</h2>
-            
-            <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-family: sans-serif; font-size: 14px;">
-              <tr>
-                <td style="padding: 6px 0; font-weight: bold; color: #475569; width: 180px;">Client Name:</td>
-                <td style="padding: 6px 0; color: #0f172a;">${name}</td>
-              </tr>
-              <tr>
-                <td style="padding: 6px 0; font-weight: bold; color: #475569;">Email:</td>
-                <td style="padding: 6px 0; color: #0f172a;"><a href="mailto:${email}" style="color: #3b82f6; text-decoration: none;">${email}</a></td>
-              </tr>
-              <tr>
-                <td style="padding: 6px 0; font-weight: bold; color: #475569;">Phone:</td>
-                <td style="padding: 6px 0; color: #0f172a;">${phone || 'N/A'}</td>
-              </tr>
-              <tr>
-                <td style="padding: 6px 0; font-weight: bold; color: #475569;">Business / Company:</td>
-                <td style="padding: 6px 0; color: #0f172a;">${company}</td>
-              </tr>
-              <tr>
-                <td style="padding: 6px 0; font-weight: bold; color: #475569;">Service Required:</td>
-                <td style="padding: 6px 0; color: #0f172a;">${need}</td>
-              </tr>
-              <tr>
-                <td style="padding: 6px 0; font-weight: bold; color: #475569;">Approximate Budget:</td>
-                <td style="padding: 6px 0; color: #0f172a;">${budget}</td>
-              </tr>
-            </table>
+    // Email to Bigyat (debbigyat@gmail.com) - bubbles up to catch block on failure
+    console.log('Attempting to send primary notification email to Bigyat...');
+    await resend.emails.send({
+      from: 'Portfolio Leads <onboarding@resend.dev>',
+      to: 'debbigyat@gmail.com',
+      replyTo: email,
+      subject: `🚀 New Project Inquiry from ${name}`,
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 25px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #f8fafc;">
+          <h2 style="color: #0f172a; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; margin-top: 0; font-family: sans-serif;">NEW CLIENT PROJECT REQUEST</h2>
+          
+          <table style="width: 100%; border-collapse: collapse; margin-top: 15px; font-family: sans-serif; font-size: 14px;">
+            <tr>
+              <td style="padding: 6px 0; font-weight: bold; color: #475569; width: 180px;">Client Name:</td>
+              <td style="padding: 6px 0; color: #0f172a;">${name}</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px 0; font-weight: bold; color: #475569;">Email:</td>
+              <td style="padding: 6px 0; color: #0f172a;"><a href="mailto:${email}" style="color: #3b82f6; text-decoration: none;">${email}</a></td>
+            </tr>
+            <tr>
+              <td style="padding: 6px 0; font-weight: bold; color: #475569;">Phone:</td>
+              <td style="padding: 6px 0; color: #0f172a;">${phone || 'N/A'}</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px 0; font-weight: bold; color: #475569;">Business / Company:</td>
+              <td style="padding: 6px 0; color: #0f172a;">${company}</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px 0; font-weight: bold; color: #475569;">Service Required:</td>
+              <td style="padding: 6px 0; color: #0f172a;">${need}</td>
+            </tr>
+            <tr>
+              <td style="padding: 6px 0; font-weight: bold; color: #475569;">Approximate Budget:</td>
+              <td style="padding: 6px 0; color: #0f172a;">${budget}</td>
+            </tr>
+          </table>
 
-            <div style="margin-top: 20px; padding: 15px; background-color: #ffffff; border-left: 4px solid #3b82f6; border-radius: 4px; font-size: 14px;">
-              <h4 style="margin-top: 0; color: #0f172a; margin-bottom: 8px;">Project Details:</h4>
-              <p style="color: #334155; line-height: 1.5; margin: 0; white-space: pre-wrap;">${description}</p>
-            </div>
-
-            <p style="font-size: 11px; color: #94a3b8; margin-top: 25px;">
-              Submitted On: ${new Date(submissionDate).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} (IST)
-            </p>
-
-            <div style="margin-top: 24px; text-align: center;">
-              <a href="mailto:${email}" style="display: inline-block; background-color: #3b82f6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">
-                Reply Direct to Client
-              </a>
-            </div>
+          <div style="margin-top: 20px; padding: 15px; background-color: #ffffff; border-left: 4px solid #3b82f6; border-radius: 4px; font-size: 14px;">
+            <h4 style="margin-top: 0; color: #0f172a; margin-bottom: 8px;">Project Details:</h4>
+            <p style="color: #334155; line-height: 1.5; margin: 0; white-space: pre-wrap;">${description}</p>
           </div>
-        `
-      });
-    } catch (mailError) {
-      console.error('Failed to send notification email to Bigyat:', mailError);
-    }
 
-    // Confirmation Email to Client
+          <p style="font-size: 11px; color: #94a3b8; margin-top: 25px;">
+            Submitted On: ${new Date(submissionDate).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} (IST)
+          </p>
+
+          <div style="margin-top: 24px; text-align: center;">
+            <a href="mailto:${email}" style="display: inline-block; background-color: #3b82f6; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px;">
+              Reply Direct to Client
+            </a>
+          </div>
+        </div>
+      `
+    });
+    console.log('Primary notification email sent to Bigyat.');
+
+    // Confirmation Email to Client - wrapped in try/catch so sandbox restrictions don't block overall success
     try {
+      console.log('Attempting to send client confirmation receipt...');
       await resend.emails.send({
         from: 'Bigyat Deb <onboarding@resend.dev>',
         to: email,
@@ -199,8 +198,9 @@ export default async function handler(req, res) {
           </div>
         `
       });
+      console.log('Client confirmation receipt sent successfully.');
     } catch (clientMailError) {
-      console.warn('Failed to send client confirmation email:', clientMailError.message);
+      console.warn('Failed to send client confirmation email (sandbox account restrictions may apply):', clientMailError.message);
     }
 
     return res.status(200).json({ 
@@ -211,7 +211,7 @@ export default async function handler(req, res) {
     console.error('Server execution error:', error);
     return res.status(500).json({ 
       success: false,
-      message: "Something went wrong. Please try again later."
+      message: error.message || "Something went wrong. Please try again later."
     });
   }
 }
