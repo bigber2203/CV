@@ -1,5 +1,7 @@
 import React from 'react';
 import { Play, TrendingUp, Cpu, Maximize } from 'lucide-react';
+import CornerPrayerFlags from '../components/PrayerFlags/CornerPrayerFlags';
+
 
 export default function Roadmap() {
   const steps = [
@@ -34,6 +36,9 @@ export default function Roadmap() {
       {/* Decorative vertical lines */}
       <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
       <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
+
+      {/* Corner Prayer Flags */}
+      <CornerPrayerFlags />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         

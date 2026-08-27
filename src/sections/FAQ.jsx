@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import { motion } from 'framer-motion';
+import CornerPrayerFlags from '../components/PrayerFlags/CornerPrayerFlags';
+
 
 export default function FAQ({ activeSection }) {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -60,6 +62,9 @@ export default function FAQ({ activeSection }) {
       {/* Decorative vertical lines */}
       <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
       <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
+
+      {/* Corner Prayer Flags */}
+      <CornerPrayerFlags />
 
       <motion.div 
         animate={{ 

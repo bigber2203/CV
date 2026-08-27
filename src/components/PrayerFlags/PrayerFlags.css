@@ -1,0 +1,109 @@
+.prayer-flags-wrapper {
+  position: absolute;
+  top: 80px; /* just below navbar height */
+  left: 10%;
+  right: 10%;
+  height: 60px;
+  pointer-events: none;
+  z-index: 8; /* above background layers, below interactive elements */
+  overflow: visible;
+  user-select: none;
+}
+
+.prayer-flags-rope {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.flags-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.prayer-flag {
+  position: absolute;
+  width: clamp(18px, 3.8vw, 34px);
+  height: clamp(22px, 4.6vw, 42px);
+  transform-origin: top center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+  border-radius: 1px;
+  will-change: transform;
+}
+
+/* ─── Individual Idle Sway Animations (gentle and asynchronous) ─── */
+.flag-blue {
+  animation: sway-blue 5.4s ease-in-out infinite;
+}
+.flag-white {
+  animation: sway-white 6.1s ease-in-out infinite;
+}
+.flag-red {
+  animation: sway-red 4.8s ease-in-out infinite;
+}
+.flag-green {
+  animation: sway-green 5.8s ease-in-out infinite;
+}
+.flag-yellow {
+  animation: sway-yellow 5.2s ease-in-out infinite;
+}
+
+@keyframes sway-blue {
+  0%, 100% {
+    transform: rotate(calc(-3deg + var(--wind-rotate, 0deg))) skewX(calc(0deg + var(--wind-skew, 0deg))) translateX(var(--wind-tx, 0px)) translateY(0px);
+  }
+  50% {
+    transform: rotate(calc(1deg + var(--wind-rotate, 0deg))) skewX(calc(2.5deg + var(--wind-skew, 0deg))) translateX(var(--wind-tx, 0px)) translateY(0.4px);
+  }
+}
+
+@keyframes sway-white {
+  0%, 100% {
+    transform: rotate(calc(1deg + var(--wind-rotate, 0deg))) skewX(calc(0deg + var(--wind-skew, 0deg))) translateX(var(--wind-tx, 0px)) translateY(0px);
+  }
+  50% {
+    transform: rotate(calc(5deg + var(--wind-rotate, 0deg))) skewX(calc(-1.8deg + var(--wind-skew, 0deg))) translateX(var(--wind-tx, 0px)) translateY(0.6px);
+  }
+}
+
+@keyframes sway-red {
+  0%, 100% {
+    transform: rotate(calc(-2deg + var(--wind-rotate, 0deg))) skewX(calc(0deg + var(--wind-skew, 0deg))) translateX(var(--wind-tx, 0px)) translateY(0px);
+  }
+  50% {
+    transform: rotate(calc(2deg + var(--wind-rotate, 0deg))) skewX(calc(1.5deg + var(--wind-skew, 0deg))) translateX(var(--wind-tx, 0px)) translateY(0.3px);
+  }
+}
+
+@keyframes sway-green {
+  0%, 100% {
+    transform: rotate(calc(3deg + var(--wind-rotate, 0deg))) skewX(calc(0deg + var(--wind-skew, 0deg))) translateX(var(--wind-tx, 0px)) translateY(0px);
+  }
+  50% {
+    transform: rotate(calc(7deg + var(--wind-rotate, 0deg))) skewX(calc(-2.2deg + var(--wind-skew, 0deg))) translateX(var(--wind-tx, 0px)) translateY(0.5px);
+  }
+}
+
+@keyframes sway-yellow {
+  0%, 100% {
+    transform: rotate(calc(-1deg + var(--wind-rotate, 0deg))) skewX(calc(0deg + var(--wind-skew, 0deg))) translateX(var(--wind-tx, 0px)) translateY(0px);
+  }
+  50% {
+    transform: rotate(calc(3deg + var(--wind-rotate, 0deg))) skewX(calc(2deg + var(--wind-skew, 0deg))) translateX(var(--wind-tx, 0px)) translateY(0.4px);
+  }
+}
+
+/* ─── Accessibility Support ─── */
+@media (prefers-reduced-motion: reduce) {
+  .prayer-flag {
+    animation: none !important;
+    transform: none !important;
+  }
+}

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import PrayerFlags from '../components/PrayerFlags/PrayerFlags';
+
 
 export default function Hero({ activeSection }) {
   const roles = [
@@ -196,8 +198,12 @@ export default function Hero({ activeSection }) {
 
       {/* Grid line divider overlay */}
       <div className="absolute top-[80px] left-0 w-full h-[1px] bg-white/5 z-1"></div>
+      {/* Decorative vertical lines */}
       <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
       <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
+
+      {/* Interactive Prayer Flags */}
+      <PrayerFlags />
 
       <motion.div 
         animate={{ 

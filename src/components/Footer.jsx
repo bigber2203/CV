@@ -136,13 +136,100 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom copyright block */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-gray-500">
-          <p>© 2026 Bigyat Deb. Built with creativity + code.</p>
+        {/* Concept 3: HP Alpine Dots Grid Footer Dock */}
+        <div className="mt-12 p-6 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-md relative overflow-hidden flex flex-col lg:flex-row justify-between items-center gap-6 shadow-[0_4px_30px_rgba(0,0,0,0.2)]">
+          {/* Subtle background glow */}
+          <div className="absolute -top-1/2 -left-1/4 w-96 h-96 bg-accent-cyan/5 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute -bottom-1/2 -right-1/4 w-96 h-96 bg-accent-purple/5 rounded-full blur-[100px] pointer-events-none" />
+          
+          {/* Left Branding */}
+          <div className="flex items-center gap-4 relative z-10">
+            <div className="text-left">
+              <span className="block text-[10px] font-mono font-bold tracking-widest text-accent-cyan uppercase mb-1">
+                // BRAND AUTHENTICITY
+              </span>
+              <h4 className="font-display font-black text-xl text-white tracking-wide">
+                WEBSITE CRAFTED BY <span className="hover:text-accent-cyan transition-colors duration-300">BIGYAT DEB</span>
+              </h4>
+            </div>
+          </div>
+
+          {/* Symmetrical 5-color HP Accent Grid (Divider) */}
+          <div className="flex items-center gap-2.5 relative z-10 px-4 py-2 bg-black/20 rounded-full border border-white/5">
+            {/* Mountain Blue */}
+            <div 
+              className="w-3.5 h-3.5 rounded-full bg-[#003580] cursor-help relative group transition-all duration-300 hover:scale-125 hover:shadow-[0_0_10px_#003580]"
+              title="Himachal Blue"
+            >
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-0.5 text-[8px] font-mono text-white bg-black/80 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">Alpine Blue</span>
+            </div>
+            {/* Snow White */}
+            <div 
+              className="w-3.5 h-3.5 rounded-full bg-[#FFFFFF] cursor-help relative group transition-all duration-300 hover:scale-125 hover:shadow-[0_0_10px_#FFFFFF]"
+              title="Snow White"
+            >
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-0.5 text-[8px] font-mono text-black bg-white/95 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">Summit Snow</span>
+            </div>
+            {/* Saffron */}
+            <div 
+              className="w-3.5 h-3.5 rounded-full bg-[#FF671F] cursor-help relative group transition-all duration-300 hover:scale-125 hover:shadow-[0_0_10px_#FF671F]"
+              title="Saffron"
+            >
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-0.5 text-[8px] font-mono text-white bg-black/80 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">Saffron Sun</span>
+            </div>
+            {/* Forest Green */}
+            <div 
+              className="w-3.5 h-3.5 rounded-full bg-[#1E6B38] cursor-help relative group transition-all duration-300 hover:scale-125 hover:shadow-[0_0_10px_#1E6B38]"
+              title="Forest Green"
+            >
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-0.5 text-[8px] font-mono text-white bg-black/80 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">Deodar Green</span>
+            </div>
+            {/* Deep Red */}
+            <div 
+              className="w-3.5 h-3.5 rounded-full bg-[#C8102E] cursor-help relative group transition-all duration-300 hover:scale-125 hover:shadow-[0_0_10px_#C8102E]"
+              title="Deep Red"
+            >
+              <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-0.5 text-[8px] font-mono text-white bg-black/80 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">Rhododendron Red</span>
+            </div>
+          </div>
+
+          {/* Right Contact Info System Labels */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 relative z-10 text-xs font-mono">
+            {/* Phone */}
+            <a 
+              href="tel:+917002200651"
+              className="group flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.01] border border-white/5 hover:border-accent-cyan/35 hover:bg-accent-cyan/[0.02] transition-all duration-300"
+            >
+              <span className="text-gray-500 group-hover:text-accent-cyan transition-colors duration-300 font-bold">
+                // TEL
+              </span>
+              <span className="text-gray-300 group-hover:text-white transition-colors duration-300">
+                +91 7002200651
+              </span>
+            </a>
+
+            {/* Email */}
+            <a 
+              href="mailto:debbigyat@gmail.com"
+              className="group flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.01] border border-white/5 hover:border-accent-purple/35 hover:bg-accent-purple/[0.02] transition-all duration-300"
+            >
+              <span className="text-gray-500 group-hover:text-accent-purple transition-colors duration-300 font-bold">
+                // MAIL
+              </span>
+              <span className="text-gray-300 group-hover:text-white transition-colors duration-300 font-bold">
+                debbigyat@gmail.com
+              </span>
+            </a>
+          </div>
+        </div>
+
+        {/* Small copyright disclaimer below dock */}
+        <div className="mt-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-mono text-gray-600">
+          <p>© 2026 Bigyat Deb. Built with creativity & code.</p>
           <div className="flex gap-4">
-            <span className="hover:text-white transition-colors">SECURE CORE</span>
-            <span className="text-gray-700">|</span>
-            <span className="hover:text-white transition-colors">ALL SYSTEMS INTEGRATED</span>
+            <span className="hover:text-white/40 transition-colors">SECURE CORE</span>
+            <span>|</span>
+            <span className="hover:text-white/40 transition-colors">ALL SYSTEMS OPERATIONAL</span>
           </div>
         </div>
 

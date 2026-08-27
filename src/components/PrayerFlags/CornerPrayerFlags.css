@@ -1,0 +1,141 @@
+.corner-flags-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: clamp(100px, 15vw, 180px);
+  height: clamp(100px, 15vw, 180px);
+  pointer-events: none;
+  z-index: 8;
+  overflow: visible;
+  user-select: none;
+}
+
+.corner-flags-rope {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.corner-flags-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.corner-flag {
+  position: absolute;
+  width: clamp(10px, 1.8vw, 18px);
+  height: clamp(12px, 2.2vw, 22px);
+  transform-origin: top center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 1px;
+  will-change: transform;
+}
+
+/* ─── Asynchronous Gentle Corner Sway Animations ─── */
+.corner-flag-blue {
+  animation: corner-sway-blue 7.2s ease-in-out infinite;
+}
+.corner-flag-white {
+  animation: corner-sway-white 8.0s ease-in-out infinite;
+}
+.corner-flag-red {
+  animation: corner-sway-red 6.5s ease-in-out infinite;
+}
+.corner-flag-green {
+  animation: corner-sway-green 7.6s ease-in-out infinite;
+}
+.corner-flag-yellow {
+  animation: corner-sway-yellow 7.0s ease-in-out infinite;
+}
+
+@keyframes corner-sway-blue {
+  0%, 100% { transform: rotate(-2deg) skewX(0deg); }
+  50% { transform: rotate(1deg) skewX(1.5deg) translateY(0.2px); }
+}
+
+@keyframes corner-sway-white {
+  0%, 100% { transform: rotate(1deg) skewX(0deg); }
+  50% { transform: rotate(3deg) skewX(-1deg) translateY(0.3px); }
+}
+
+@keyframes corner-sway-red {
+  0%, 100% { transform: rotate(-1deg) skewX(0deg); }
+  50% { transform: rotate(2deg) skewX(1deg) translateY(0.2px); }
+}
+
+@keyframes corner-sway-green {
+  0%, 100% { transform: rotate(2deg) skewX(0deg); }
+  50% { transform: rotate(5deg) skewX(-1.5deg) translateY(0.3px); }
+}
+
+@keyframes corner-sway-yellow {
+  0%, 100% { transform: rotate(0deg) skewX(0deg); }
+  50% { transform: rotate(3deg) skewX(1.2deg) translateY(0.2px); }
+}
+
+/* ─── Viewport Intersection Scroll Gust Animations (Triggered once) ─── */
+.gust-active .corner-flag-blue {
+  animation: corner-gust-blue 2.2s cubic-bezier(0.25, 1, 0.5, 1) 1;
+}
+.gust-active .corner-flag-white {
+  animation: corner-gust-white 2.2s cubic-bezier(0.25, 1, 0.5, 1) 1;
+}
+.gust-active .corner-flag-red {
+  animation: corner-gust-red 2.2s cubic-bezier(0.25, 1, 0.5, 1) 1;
+}
+.gust-active .corner-flag-green {
+  animation: corner-gust-green 2.2s cubic-bezier(0.25, 1, 0.5, 1) 1;
+}
+.gust-active .corner-flag-yellow {
+  animation: corner-gust-yellow 2.2s cubic-bezier(0.25, 1, 0.5, 1) 1;
+}
+
+@keyframes corner-gust-blue {
+  0% { transform: rotate(-2deg) skewX(0deg); }
+  25% { transform: rotate(18deg) skewX(12deg) translateY(-2px); }
+  65% { transform: rotate(-6deg) skewX(-4deg) translateY(0.5px); }
+  100% { transform: rotate(-2deg) skewX(0deg); }
+}
+
+@keyframes corner-gust-white {
+  0% { transform: rotate(1deg) skewX(0deg); }
+  25% { transform: rotate(24deg) skewX(16deg) translateY(-3px); }
+  65% { transform: rotate(-4deg) skewX(-3deg) translateY(0.6px); }
+  100% { transform: rotate(1deg) skewX(0deg); }
+}
+
+@keyframes corner-gust-red {
+  0% { transform: rotate(-1deg) skewX(0deg); }
+  25% { transform: rotate(20deg) skewX(14deg) translateY(-2px); }
+  65% { transform: rotate(-5deg) skewX(-4deg) translateY(0.4px); }
+  100% { transform: rotate(-1deg) skewX(0deg); }
+}
+
+@keyframes corner-gust-green {
+  0% { transform: rotate(2deg) skewX(0deg); }
+  25% { transform: rotate(28deg) skewX(18deg) translateY(-4px); }
+  65% { transform: rotate(-3deg) skewX(-2deg) translateY(0.8px); }
+  100% { transform: rotate(2deg) skewX(0deg); }
+}
+
+@keyframes corner-gust-yellow {
+  0% { transform: rotate(0deg) skewX(0deg); }
+  25% { transform: rotate(22deg) skewX(15deg) translateY(-3px); }
+  65% { transform: rotate(-4deg) skewX(-3deg) translateY(0.5px); }
+  100% { transform: rotate(0deg) skewX(0deg); }
+}
+
+/* ─── Accessibility ─── */
+@media (prefers-reduced-motion: reduce) {
+  .corner-flag {
+    animation: none !important;
+    transform: none !important;
+  }
+}
