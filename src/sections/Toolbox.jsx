@@ -1,10 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Code, Brush, Move, Bot, Sparkles } from 'lucide-react';
-import CinematicBackground from '../components/CinematicBackground';
 
 export default function Toolbox({ activeSection }) {
-  const sectionRef = useRef(null);
   const [hoveredCategory, setHoveredCategory] = useState(null);
 
   const sectionIndex = {
@@ -63,21 +61,9 @@ export default function Toolbox({ activeSection }) {
 
   return (
     <section 
-      ref={sectionRef}
       id="toolbox" 
       className="relative py-24 overflow-hidden border-y border-white/5"
     >
-      {/* Cinematic Background Layer */}
-      <CinematicBackground
-        src="/backgrounds/section-bazaar-banners.jpg"
-        webp="/backgrounds/section-bazaar-banners.webp"
-        mobile="/backgrounds/section-bazaar-banners-mobile.webp"
-        objectPosition="center center"
-        overlayStrength="strong"
-        parallax={true}
-        kenBurns={false}
-        sectionRef={sectionRef}
-      />
 
       {/* Structural details */}
       <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>

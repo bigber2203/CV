@@ -52,13 +52,14 @@ export default function FAQ({ activeSection }) {
   };
 
   return (
-    <section id="faq" className="relative py-24 overflow-hidden">
-      {/* Decorative vertical lines */}
-      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
-      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
+    <section 
+      id="faq" 
+      className="relative py-24 overflow-hidden"
+    >
 
-      {/* Background glow spot */}
-      <div className="absolute bottom-[10%] left-[-10%] w-[45%] h-[45%] bg-accent-pink/5 rounded-full blur-[140px] pointer-events-none"></div>
+      {/* Decorative vertical lines */}
+      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
+      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
 
       <motion.div 
         animate={{ 
@@ -70,7 +71,13 @@ export default function FAQ({ activeSection }) {
       >
         
         {/* Header */}
-        <div className="text-left mb-16 max-w-2xl">
+        <motion.div 
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-left mb-16 max-w-2xl"
+        >
           <span className="text-xs font-mono font-bold tracking-widest text-accent-pink uppercase block mb-3">
             // FREQUENTLY ASKED QUESTIONS
           </span>
@@ -80,16 +87,22 @@ export default function FAQ({ activeSection }) {
           <p className="text-gray-400 text-sm md:text-base font-body leading-relaxed">
             Here are quick explanations regarding project timelines, AI capabilities, design revisions, and operational logistics.
           </p>
-        </div>
+        </motion.div>
 
         {/* FAQ Accordion Grid */}
-        <div className="max-w-3xl mx-auto space-y-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
+          className="max-w-3xl mx-auto space-y-4"
+        >
           {faqs.map((faq, index) => {
             const isOpen = activeIndex === index;
             return (
               <div 
                 key={index}
-                className="bg-[#12151F]/40 border border-white/5 rounded-2xl hover:border-white/10 hover:bg-[#12151F]/70 transition-all duration-300 overflow-hidden"
+                className="faq-glass-card overflow-hidden"
               >
                 <button
                   onClick={() => toggleAccordion(index)}
@@ -116,7 +129,7 @@ export default function FAQ({ activeSection }) {
               </div>
             );
           })}
-        </div>
+        </motion.div>
 
       </motion.div>
     </section>

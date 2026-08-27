@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 export default function Navbar({ activeSection, setActiveSection }) {
   const [scrolled, setScrolled] = useState(false);
@@ -16,12 +16,14 @@ export default function Navbar({ activeSection, setActiveSection }) {
   ];
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+    // Update scrolled (sticky header) + active section from a scroll position value.
+    // Must accept a scroll value from Lenis because Lenis virtualises scrolling and
+    // window.scrollY stays at 0 during virtual scroll.
+    const updateFromScroll = (scrollY) => {
+      setScrolled(scrollY > 50);
 
-      // Simple intersection observer logic for active sections
       const sections = navLinks.map(link => document.getElementById(link.id));
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
+      const scrollPosition = scrollY + window.innerHeight / 3;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
@@ -32,9 +34,46 @@ export default function Navbar({ activeSection, setActiveSection }) {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    // Lenis subscription (primary) ─────────────────────────────────────────
+    const onLenisScroll = ({ scroll }) => updateFromScroll(scroll);
+
+    const attachLenis = () => {
+      if (window.lenis) {
+        window.lenis.on('scroll', onLenisScroll);
+        // Run once immediately with current position
+        updateFromScroll(window.lenis.scroll ?? 0);
+        return true;
+      }
+      return false;
+    };
+
+    let pollTimer = null;
+    if (!attachLenis()) {
+      let attempts = 0;
+      pollTimer = setInterval(() => {
+        attempts++;
+        if (attachLenis() || attempts >= 20) {
+          clearInterval(pollTimer);
+          pollTimer = null;
+        }
+      }, 100);
+    }
+
+    // Native scroll fallback (when Lenis is absent) ────────────────────────
+    const onNativeScroll = () => {
+      if (window.lenis) return; // Lenis handles it
+      updateFromScroll(window.scrollY);
+    };
+    window.addEventListener('scroll', onNativeScroll, { passive: true });
+
+    return () => {
+      if (window.lenis) {
+        try { window.lenis.off('scroll', onLenisScroll); } catch (e) { void e; }
+      }
+      clearInterval(pollTimer);
+      window.removeEventListener('scroll', onNativeScroll);
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNavClick = (id) => {
     setMobileMenuOpen(false);

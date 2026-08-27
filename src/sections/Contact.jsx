@@ -3,6 +3,7 @@ import { Mail, Github, Linkedin, Instagram, MessageSquare, ArrowRight, CheckCirc
 import { motion } from 'framer-motion';
 
 export default function Contact({ activeSection }) {
+  const sectionRef = useRef(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -157,14 +158,15 @@ export default function Contact({ activeSection }) {
   };
 
   return (
-    <section id="contact" className="relative py-24 overflow-hidden border-t border-white/5">
+    <section 
+      ref={sectionRef}
+      id="contact" 
+      className="relative py-24 overflow-hidden border-t border-white/5"
+    >
+
       {/* Decorative vertical lines */}
-      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
-      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
-      
-      {/* Radial lights */}
-      <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent-cyan/5 rounded-full blur-[150px] pointer-events-none"></div>
-      <div className="absolute top-[20%] right-[-10%] w-[45%] h-[45%] bg-accent-purple/5 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
+      <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>
 
       <motion.div 
         animate={{ 
@@ -176,7 +178,13 @@ export default function Contact({ activeSection }) {
       >
         
         {/* ================= CTA SECTION ================= */}
-        <div className="glass-panel p-8 md:p-16 rounded-3xl border border-white/5 text-center mb-24 relative overflow-hidden">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="contact-glass-panel p-8 md:p-16 text-center mb-24 relative overflow-hidden"
+        >
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,229,255,0.08),transparent_70%)] pointer-events-none"></div>
           
           <span className="text-xs font-mono font-bold tracking-widest text-accent-cyan uppercase block mb-4">
@@ -211,7 +219,7 @@ export default function Contact({ activeSection }) {
               BOOK A DISCUSSION
             </a>
           </div>
-        </div>
+        </motion.div>
 
         <div id="contact-form-anchor" className="pt-8"></div>
 
@@ -287,7 +295,13 @@ export default function Contact({ activeSection }) {
 
           {/* Right form card column */}
           <div className="lg:col-span-7">
-            <div className="clay-card p-6 md:p-10 rounded-3xl border border-white/10 text-left relative min-h-[500px] flex flex-col justify-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 1, ease: "easeOut", delay: 0.15 }}
+              className="contact-glass-panel p-6 md:p-10 text-left relative min-h-[500px] flex flex-col justify-center"
+            >
               
               {isSuccess ? (
                 /* Success view */
@@ -507,7 +521,7 @@ export default function Contact({ activeSection }) {
                 </form>
               )}
 
-            </div>
+            </motion.div>
           </div>
 
         </div>

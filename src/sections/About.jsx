@@ -1,10 +1,8 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Sparkles, MapPin, Cpu, Layout, FileCode, PlaySquare } from 'lucide-react';
-import CinematicBackground from '../components/CinematicBackground';
 
 export default function About({ activeSection }) {
-  const sectionRef = useRef(null);
 
   const domains = [
     { name: 'Web Development', icon: <FileCode className="w-4 h-4 text-accent-cyan" /> },
@@ -32,21 +30,9 @@ export default function About({ activeSection }) {
 
   return (
     <section 
-      ref={sectionRef}
       id="about" 
       className="relative py-24 overflow-hidden border-y border-white/5"
     >
-      {/* Cinematic Background Layer */}
-      <CinematicBackground
-        src="/backgrounds/section-hanuman-temple.jpg"
-        webp="/backgrounds/section-hanuman-temple.webp"
-        mobile="/backgrounds/section-hanuman-temple-mobile.webp"
-        objectPosition="center 40%"
-        overlayStrength="medium"
-        parallax={true}
-        kenBurns={false}
-        sectionRef={sectionRef}
-      />
       
       {/* Decorative vertical lines */}
       <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>

@@ -1,10 +1,24 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, RefreshCw, Send, Share2, Layers } from 'lucide-react';
-import CinematicBackground from '../components/CinematicBackground';
 
-export default function PossibilityLab() {
+export default function PossibilityLab({ activeSection }) {
   const [activeScenario, setActiveScenario] = useState('brand');
+
+  const sectionIndex = {
+    home: 0,
+    about: 1,
+    services: 2,
+    'possibility-lab': 3,
+    toolbox: 4,
+    faq: 5,
+    contact: 6
+  };
+
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
+  const isActive = activeSection === 'possibility-lab';
+  const isPast = sectionIndex[activeSection] > 3;
+  const xOffset = isMobile ? 0 : (isPast ? -50 : 50);
 
   const scenarios = [
     {
@@ -175,25 +189,11 @@ export default function PossibilityLab() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const sectionRef = useRef(null);
-
   return (
     <section 
-      ref={sectionRef}
       id="possibility-lab" 
       className="relative py-24 overflow-hidden border-t border-white/5"
     >
-      {/* Cinematic Background Layer */}
-      <CinematicBackground
-        src="/backgrounds/section-market-illustrated.png"
-        webp="/backgrounds/section-market-illustrated.webp"
-        mobile="/backgrounds/section-market-illustrated-mobile.webp"
-        objectPosition="center center"
-        overlayStrength="strong"
-        parallax={true}
-        kenBurns={false}
-        sectionRef={sectionRef}
-      />
       
       {/* Structural details */}
       <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>

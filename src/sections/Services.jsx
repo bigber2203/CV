@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Laptop, 
@@ -10,11 +10,24 @@ import {
   ArrowRight,
   CheckCircle2
 } from 'lucide-react';
-import CinematicBackground from '../components/CinematicBackground';
 
-export default function Services() {
-  const sectionRef = useRef(null);
+export default function Services({ activeSection }) {
   const [activeCard, setActiveCard] = useState(null);
+
+  const sectionIndex = {
+    home: 0,
+    about: 1,
+    services: 2,
+    'possibility-lab': 3,
+    toolbox: 4,
+    faq: 5,
+    contact: 6
+  };
+
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth <= 768 : false;
+  const isActive = activeSection === 'services';
+  const isPast = sectionIndex[activeSection] > 2;
+  const xOffset = isMobile ? 0 : (isPast ? -50 : 50);
 
   const services = [
     {
@@ -120,21 +133,9 @@ export default function Services() {
 
   return (
     <section 
-      ref={sectionRef}
       id="services" 
       className="relative py-24 overflow-hidden"
     >
-      {/* Cinematic Background Layer */}
-      <CinematicBackground
-        src="/backgrounds/section-street-scene.jpg"
-        webp="/backgrounds/section-street-scene.webp"
-        mobile="/backgrounds/section-street-scene-mobile.webp"
-        objectPosition="center center"
-        overlayStrength="strong"
-        parallax={true}
-        kenBurns={false}
-        sectionRef={sectionRef}
-      />
       
       {/* Structural details */}
       <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block z-1"></div>

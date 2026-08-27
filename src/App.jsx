@@ -7,6 +7,7 @@ import CustomCursor from './components/CustomCursor';
 import Navbar from './components/Navbar';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import Footer from './components/Footer';
+import ScrollVideoBackground from './components/ScrollVideoBackground';
 
 // Import Sections
 import Hero from './sections/Hero';
@@ -60,6 +61,26 @@ export default function App() {
 
   return (
     <>
+      {/* Video canvas: fixed, z-index:1, opacity:0 until frame 1 loads */}
+      <ScrollVideoBackground />
+
+      {/* Global cinematic overlay: subtle dark vignette to aid readability.
+          z-index 2 = above canvas (1), below main content (10).
+          pointer-events:none so it never blocks any interaction.
+          hidden on mobile (canvas doesn't render there). */}
+      <div
+        aria-hidden="true"
+        className="hidden md:block"
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 2,
+          pointerEvents: 'none',
+          background:
+            'radial-gradient(ellipse at 50% 40%, rgba(8,9,13,0.30) 0%, rgba(8,9,13,0.65) 100%)',
+        }}
+      />
+
       {/* Background Layout Shells */}
       <BackgroundGrid />
       <CustomCursor />

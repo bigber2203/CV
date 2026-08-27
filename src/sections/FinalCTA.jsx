@@ -3,7 +3,7 @@ import { ArrowUpRight } from 'lucide-react';
 
 export default function FinalCTA() {
   return (
-    <section className="relative py-24 bg-[#08090D] overflow-hidden border-t border-white/5">
+    <section className="relative py-24 bg-[#08090D]/50 overflow-hidden border-t border-white/5">
       {/* Decorative vertical lines */}
       <div className="absolute top-0 left-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>
       <div className="absolute top-0 right-[10%] w-[1px] h-full bg-white/5 hidden md:block"></div>

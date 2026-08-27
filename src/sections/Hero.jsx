@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import CinematicBackground from '../components/CinematicBackground';
 
 export default function Hero({ activeSection }) {
   const roles = [
@@ -189,26 +188,11 @@ export default function Hero({ activeSection }) {
     }
   };
 
-  const sectionRef = useRef(null);
-
   return (
     <section 
-      ref={sectionRef}
       id="home" 
       className="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden"
     >
-      {/* Cinematic Background Layer */}
-      <CinematicBackground
-        src="/backgrounds/hero-bioluminescent.jpg"
-        webp="/backgrounds/hero-bioluminescent.webp"
-        mobile="/backgrounds/hero-bioluminescent-mobile.webp"
-        objectPosition="center center"
-        overlayStrength="medium"
-        parallax={true}
-        kenBurns={true}
-        priority={true}
-        sectionRef={sectionRef}
-      />
 
       {/* Grid line divider overlay */}
       <div className="absolute top-[80px] left-0 w-full h-[1px] bg-white/5 z-1"></div>
